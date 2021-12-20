@@ -2,12 +2,12 @@ import React,{useEffect,useState} from 'react'
 
 const FlagApp = () => {
 
-    const[country,setCountry]=useState([])
-    console.log(country)
+    const[countries,setCountries]=useState([])
+    console.log(countries)
     useEffect(() => {
         fetch("https://restcountries.com/v3/all")
         .then((res) => res.json())
-        .then((data) =>setCountry(data))
+        .then((data) =>setCountries(data))
         .catch((err)=>console.log(err));
         
     }, []); //sadece ilk açıldığında çalışacak
@@ -16,7 +16,17 @@ const FlagApp = () => {
     return (
         <div>
             <h1>Countries</h1>
-            {country.length}
+            {countries.length}
+            {countries.map((country) => {
+                const {name,capital,flags} = country
+                return(
+                    <div key={name.common}>
+                        <h2>{name.common}</h2>
+                        <img src={flags[1]} alt="" />
+                        <h4>Capital of the {name.common} is {capital}</h4>
+                    </div>
+                )
+            })}
         </div>
     )
 }
